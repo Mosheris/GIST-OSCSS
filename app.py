@@ -1,6 +1,8 @@
 import pickle
 from pathlib import Path
 import warnings
+import os
+import sys
 
 import numpy as np
 import pandas as pd
@@ -10,6 +12,13 @@ import streamlit.components.v1 as components
 
 
 warnings.filterwarnings("ignore")
+
+# 在Streamlit Cloud上处理Git LFS文件
+if os.path.exists('setup_lfs.py'):
+    try:
+        exec(open('setup_lfs.py').read())
+    except Exception as e:
+        st.warning(f"LFS设置警告: {e}")
 
 
 st.set_page_config(
@@ -170,8 +179,33 @@ def load_model_package(model_file: str) -> dict:
         st.error(f"❌ 找不到模型文件: {model_path}")
         st.stop()
 
-    with model_path.open("rb") as f:
-        return pickle.load(f)
+    # 检查是否是LFS指针文件
+    file_size = model_path.stat().st_size
+    if file_size < 1000:  # LFS指针文件通常只有几百字节
+        st.error(
+            f"❌ 模型文件 '{model_file}' 似乎是LFS指针文件，而非实际数据。\n\n"
+            f"可能原因:\n"
+            f"1. Streamlit Cloud未正确克隆LFS文件\n"
+            f"2. 本地Git LFS配置未正确\n\n"
+            f"解决方案:\n"
+            f"- 确保已运行: `git lfs pull`\n"
+            f"- 或在Streamlit Cloud部署设置中启用Git LFS支持"
+        )
+        st.stop()
+
+    try:
+        with model_path.open("rb") as f:
+            return pickle.load(f)
+    except (EOFError, pickle.UnpicklingError) as e:
+        st.error(
+            f"❌ 无法加载模型文件 '{model_file}'。\n\n"
+            f"错误: {str(e)}\n\n"
+            f"这通常表示LFS文件未正确加载。"
+        )
+        st.stop()
+    except Exception as e:
+        st.error(f"❌ 加载模型时出错: {e}")
+        st.stop()
 
 
 @st.cache_resource
