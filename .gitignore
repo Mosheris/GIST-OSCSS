@@ -1,0 +1,32 @@
+# Python analysis files
+0.*.py
+1.*.py
+2.*.py
+3.*.py
+4.*.py
+5.*.py
+6.*.py
+SHAP*.py
+小数据RFE.py
+训练模型.py
+RSF_模型训练汇总.txt
+
+# SHAP output folders
+SHAP_*/
+
+# Excel data files
+*.xlsx
+
+# Virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# Keep only essential files for deployment

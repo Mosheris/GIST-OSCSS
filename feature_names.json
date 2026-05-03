@@ -1,0 +1,25 @@
+{
+  "OS": [
+    "Age",
+    "Tumor.size",
+    "Race.1",
+    "Race.2",
+    "Marital.status.1",
+    "Marital.status.2",
+    "Gender",
+    "Site",
+    "Mitotic.rate",
+    "Liver.metastasis"
+  ],
+  "CSS": [
+    "Age",
+    "Tumor.size",
+    "Race.1",
+    "Race.2",
+    "Gender",
+    "Site",
+    "Mitotic.rate",
+    "Liver.metastasis",
+    "Systemic.treatment"
+  ]
+}
