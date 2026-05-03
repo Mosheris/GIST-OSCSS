@@ -68,17 +68,24 @@ st.markdown(
 
 
 MODEL_CONFIGS = {
-    "Gastric": {
-        "title": "Gastric RSF Survival Risk Calculator",
-        "file": "Stomach.pkl",
-        "key_prefix": "stomach",
-        "description": "Individual survival risk assessment for gastric RSF model.",
+ MODEL_CONFIGS = {
+    "OS": {
+        "title": "Overall Survival (OS) Risk Calculator",
+        "file": "RSF_OS.pkl",
+        "key_prefix": "os",
+        "description": "Individual survival risk assessment for Overall Survival (OS) outcome.",
+        "features": ["Age", "Tumor.size", "Race.1", "Race.2", "Marital.status.1", "Marital.status.2", "Gender", "Site", "Mitotic.rate", "Liver.metastasis"],
+        "has_marital": True,
+        "has_systemic": False,
     },
-    "Small Intestine": {
-        "title": "Small Intestine RSF Survival Risk Calculator",
-        "file": "Intestine.pkl",
-        "key_prefix": "intestine",
-        "description": "Individual survival risk assessment for small intestine RSF model.",
+    "CSS": {
+        "title": "Cancer-Specific Survival (CSS) Risk Calculator",
+        "file": "RSF_CSS.pkl",
+        "key_prefix": "css",
+        "description": "Individual survival risk assessment for Cancer-Specific Survival (CSS) outcome.",
+        "features": ["Age", "Tumor.size", "Race.1", "Race.2", "Gender", "Site", "Mitotic.rate", "Liver.metastasis", "Systemic.treatment"],
+        "has_marital": False,
+        "has_systemic": True,
     },
 }
 
